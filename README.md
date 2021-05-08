@@ -1,4 +1,4 @@
-# Life_Simulation
+# Life Simulation
 The intent of this project is for me to learn Rust and play around with Web Assembly at the same time.
 
 In particular, the current goal is to create the famous Conway's Game of Life. In the future, I might add in more simulations if I find anything interesting.
