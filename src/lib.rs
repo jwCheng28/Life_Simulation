@@ -1,5 +1,5 @@
 use wasm_bindgen::prelude::*;
-use rand::{thread_rng, Rng};
+use rand::Rng;
 
 #[wasm_bindgen]
 pub struct Universe {
@@ -15,11 +15,16 @@ impl Universe {
 
     fn live_neighbors(&self, row: u32, col: u32) -> u8 {
         let mut count: u8 = 0;
-        for r in -1..2 {
-            if (row == 0 && r == -1) || (row == self.height && r == 1) || (r == 0) {continue;}
-            for c in -1..2 {
-                if (col == 0 && c == -1) || (col == self.width && c == 1) || (c == 0) {continue;}
-                let cur: usize = self.cell_index(row, col);
+
+        let rstart: u32 = if row == 0 { 0 } else { row-1 };
+        let rend: u32 = if row == (self.height-1) { self.height-1 } else { row+1 };
+        let cstart: u32 = if col == 0 { 0 } else { col-1 };
+        let cend: u32 = if col == (self.width-1) { self.width-1 } else { col+1 };
+
+        for r in rstart..rend+1 {
+            for c in cstart..cend+1 {
+                if r == row && c == col {continue;}
+                let cur: usize = self.cell_index(r, c);
                 count += self.cells[cur];
             }
         }
@@ -29,6 +34,7 @@ impl Universe {
 
 #[wasm_bindgen]
 impl Universe {
+    #[wasm_bindgen(constructor)]
     pub fn new(width: u32, height: u32) -> Universe {
         Universe {
             width,
@@ -38,9 +44,13 @@ impl Universe {
     }
 
     pub fn random_initialization(&mut self) {
-        let mut rng = thread_rng();
-        let new_cells: Vec<u8> = (0..self.width*self.height).map(|_| rng.gen_range(0..=1) as u8).collect();
+        let mut rng = rand::thread_rng();
+        let new_cells: Vec<u8> = (0..self.width*self.height).map(|_| rng.gen_range(0, 2) as u8).collect();
         self.cells = new_cells;
+    }
+
+    pub fn cell_ptr(&self) -> *const u8 {
+        self.cells.as_ptr()
     }
 
     pub fn next_cycle(&mut self) {
@@ -50,6 +60,7 @@ impl Universe {
                 let i: usize = self.cell_index(r, c);
                 let state: u8 = self.cells[i];
                 let living_neighbors: u8 = self.live_neighbors(r, c);
+                // println!("{} index: {} neighbors", i, living_neighbors);
                 if state == 0 && living_neighbors == 3 {
                     new_cells[i] = 1;
                 } else if state == 1 && (living_neighbors < 2 || living_neighbors > 3) {
@@ -59,8 +70,27 @@ impl Universe {
         }
         self.cells = new_cells;
     }
+}
 
-    pub fn cells_string(self) -> String {
-        self.cells.iter().map(|state| state.to_string()).collect()
+#[cfg(test)]
+mod tests {
+    use super::Universe;
+
+    #[test]
+    fn test_next_cycle() {
+        let width: u32 = 3;
+        let height: u32 = 3;
+        let mut universe1 = Universe {
+            width,
+            height,
+            cells: vec![0, 1, 0,
+                        0, 1, 0,
+                        0, 1, 0]
+        };
+        universe1.next_cycle();
+        assert_eq!(universe1.cells, vec![0,0,0,1,1,1,0,0,0]);
+        universe1.next_cycle();
+        assert_eq!(universe1.cells, vec![0,1,0,0,1,0,0,1,0]);
+        // println!("{:?}", universe1.cells);
     }
 }
