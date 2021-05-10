@@ -5,10 +5,14 @@ use rand::Rng;
 pub struct Universe {
     width: u32,
     height: u32,
-    cells: Vec<u8>,
+    cells: Vec<u8>
 }
 
 impl Universe {
+    pub fn cell_arr(&self) -> &[u8] {
+        &self.cells
+    }
+
     fn cell_index(&self, row: u32, col: u32) -> usize {
         (row * self.width + col) as usize
     }
@@ -49,6 +53,14 @@ impl Universe {
         self.cells = new_cells;
     }
 
+    pub fn set_cells(&mut self, new_cell: Vec<u8>) {
+        if new_cell.len() != (self.width * self.height) as usize {
+            panic!("Input cell vector size does not match intended universe size");
+        } else {
+            self.cells = new_cell;
+        }
+    }
+
     pub fn cell_ptr(&self) -> *const u8 {
         self.cells.as_ptr()
     }
@@ -69,28 +81,5 @@ impl Universe {
             }
         }
         self.cells = new_cells;
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::Universe;
-
-    #[test]
-    fn test_next_cycle() {
-        let width: u32 = 3;
-        let height: u32 = 3;
-        let mut universe1 = Universe {
-            width,
-            height,
-            cells: vec![0, 1, 0,
-                        0, 1, 0,
-                        0, 1, 0]
-        };
-        universe1.next_cycle();
-        assert_eq!(universe1.cells, vec![0,0,0,1,1,1,0,0,0]);
-        universe1.next_cycle();
-        assert_eq!(universe1.cells, vec![0,1,0,0,1,0,0,1,0]);
-        // println!("{:?}", universe1.cells);
     }
 }
