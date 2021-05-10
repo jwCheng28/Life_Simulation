@@ -6,7 +6,7 @@ export const drawGrid = (ctx, width, height, cell, color) => {
         ctx: 2D canvas context
         width: width of universe
         height: height of universe
-        cell: cell object with the following attributes {size: int, alive_color: clr_hex, dead_color: clr_hex}
+        cell: cell object with the following attributes {size: int, color: cell clr in hex}
         color: color of grid in hex
     @function:
         draws the grid of the universe
@@ -32,8 +32,8 @@ export const clearScreen = (ctx, universe, width, height, cell, color="#FFFFFF")
         universe: universe object
         width: width of universe
         height: height of universe
-        cell: cell object with the following attributes {size: int, alive_color: clr_hex, dead_color: clr_hex}
-        color: color of screeb in hex
+        cell: cell object with the following attributes {size: int, color: cell clr in hex}
+        color: color of screen in hex
     @function:
         clears the screen into input color
     */
@@ -55,7 +55,7 @@ export const drawCells = (ctx, universe, width, height, cell) => {
         universe: universe object
         width: width of universe
         height: height of universe
-        cell: cell object with the following attributes {size: int, alive_color: clr_hex, dead_color: clr_hex}
+        cell: cell object with the following attributes {size: int, color: cell clr in hex}
     @function:
         draw each cell onto the canvas
     */
@@ -66,9 +66,9 @@ export const drawCells = (ctx, universe, width, height, cell) => {
         for (let j = 0; j < width; ++j) {
             cur = i * width + j;
             if (cells_arr[cur]) {
-                ctx.fillStyle = cell.alive_color;
+                ctx.fillStyle = cell.color;
             } else {
-                ctx.fillStyle = cell.dead_color;
+                ctx.fillStyle = "#FFFFFF";
             }
             ctx.fillRect(j * (cell.size + 1) + 1, i * (cell.size + 1) + 1, cell.size, cell.size );
         }

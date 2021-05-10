@@ -2,7 +2,7 @@ import { Universe } from 'life_simulation';
 import * as draw from './canvas';
 
 // TODO: Should add a color picker for the cell
-var cell = {size: 10, alive_color: "#000000", dead_color: "#FFFFFF"};
+var cell = {size: 10, color: "#000000"};
 const UNIVERSE_WIDTH = 64;
 const UNIVERSE_HEIGHT = 64;
 let universe = new Universe(UNIVERSE_WIDTH, UNIVERSE_HEIGHT);
