@@ -1,4 +1,3 @@
-import { Universe } from 'life_simulation';
 import { memory } from 'life_simulation/life_simulation_bg';
 
 export const drawGrid = (ctx, width, height, cell, color) => {
