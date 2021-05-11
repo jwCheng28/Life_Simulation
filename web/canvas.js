@@ -41,7 +41,7 @@ export const clearScreen = (ctx, universe, width, height, cell, color="#FFFFFF")
     ctx.fillStyle = color;
     for (let i = 0; i < height; ++i) {
         for (let j = 0; j < width; ++j) {
-            ctx.fillRect(j * (cell.size + 1) + 1, i * (cell.size + 1) + 1, cell.size, cell.size );
+            ctx.fillRect(j * (cell.size + 1), i * (cell.size + 1), cell.size, cell.size);
         }
     }
     ctx.stroke();
@@ -70,7 +70,7 @@ export const drawCells = (ctx, universe, width, height, cell) => {
             } else {
                 ctx.fillStyle = "#FFFFFF";
             }
-            ctx.fillRect(j * (cell.size + 1) + 1, i * (cell.size + 1) + 1, cell.size, cell.size );
+            ctx.fillRect(j * (cell.size + 1), i * (cell.size + 1), cell.size, cell.size);
         }
     }
     ctx.stroke();
