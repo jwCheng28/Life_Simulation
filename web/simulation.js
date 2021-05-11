@@ -1,7 +1,6 @@
 import { Universe } from 'life_simulation';
 import * as draw from './canvas';
 
-// TODO: Should add a color picker for the cell
 var cell = {size: 10, color: "#000000"};
 const UNIVERSE_WIDTH = 64;
 const UNIVERSE_HEIGHT = 64;
@@ -15,6 +14,7 @@ const ctx = canvas.getContext('2d');
 const generateButton = document.getElementById("generate");
 const clearButton = document.getElementById("clear");
 const pauseButton = document.getElementById("pause");
+const setColor = document.getElementById("cell_color");
 let animation = null;
 
 const loop = () => {
@@ -49,4 +49,8 @@ clearButton.addEventListener("click", event => {
 
 pauseButton.addEventListener("click", event => {
     animation == null ? play() : pause();
+});
+
+setColor.addEventListener("change", event => {
+    cell.color = setColor.value;
 });
