@@ -7,14 +7,15 @@ const UNIVERSE_HEIGHT = 64;
 let universe = new Universe(UNIVERSE_WIDTH, UNIVERSE_HEIGHT);
 
 const canvas = document.getElementById("game_of_life_universe");
-canvas.height = (cell.size + 1) * UNIVERSE_HEIGHT + 1;
-canvas.width = (cell.size + 1) * UNIVERSE_WIDTH + 1;
+canvas.height = (cell.size + 1) * UNIVERSE_HEIGHT;
+canvas.width = (cell.size + 1) * UNIVERSE_WIDTH;
 
 const ctx = canvas.getContext('2d');
 const generateButton = document.getElementById("generate");
 const clearButton = document.getElementById("clear");
 const pauseButton = document.getElementById("pause");
 const setColor = document.getElementById("cell_color");
+const setPopulation = document.getElementById("population");
 let animation = null;
 
 const loop = () => {
@@ -37,7 +38,8 @@ const pause = () => {
 generateButton.addEventListener("click", event => {
     if (animation != null) pause();
     draw.clearScreen(ctx, universe, UNIVERSE_WIDTH, UNIVERSE_HEIGHT, cell)
-    universe.random_initialization();
+    let population = setPopulation.value;
+    universe.random_initialization(population);
     draw.drawCells(ctx, universe, UNIVERSE_WIDTH, UNIVERSE_HEIGHT, cell);
 });
 
