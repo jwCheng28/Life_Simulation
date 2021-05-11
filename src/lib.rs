@@ -1,5 +1,5 @@
 use wasm_bindgen::prelude::*;
-use rand::Rng;
+use rand::distributions::{Distribution, Uniform};
 
 #[wasm_bindgen]
 pub struct Universe {
@@ -47,9 +47,18 @@ impl Universe {
         }
     }
 
-    pub fn random_initialization(&mut self) {
+    pub fn random_initialization(&mut self, population: u8) {
         let mut rng = rand::thread_rng();
-        let new_cells: Vec<u8> = (0..self.width*self.height).map(|_| rng.gen_range(0, 2) as u8).collect();
+        let interval = Uniform::from(1..101);
+
+        let new_cells: Vec<u8> = (0..self.width*self.height).map(|_| {
+            if interval.sample(&mut rng) >= population {
+                0
+            } else {
+                1
+            }
+        }).collect();
+
         self.cells = new_cells;
     }
 
