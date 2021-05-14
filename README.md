@@ -3,6 +3,9 @@ The intent of this project is for me to learn Rust and play around with Web Asse
 
 In particular, the current goal is to create the famous Conway's Game of Life. In the future, I might add in more simulations if I find anything interesting.
 
+## Try Out the Simulation
+Press this link to play with the simulation: https://jwcheng28.github.io/Life_Simulation/
+
 ## Conway's Game of Life
 Conway's Game of Life is quite interesting as the rules are fairly simple, but the possibility are endless.
 
