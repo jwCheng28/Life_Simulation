@@ -1,0 +1,15 @@
+{
+  "name": "life_simulation",
+  "collaborators": [
+    "jwCheng28 <jwCheng28@users.noreply.github.com>"
+  ],
+  "version": "0.1.0",
+  "files": [
+    "life_simulation_bg.wasm",
+    "life_simulation.js",
+    "life_simulation.d.ts"
+  ],
+  "module": "life_simulation.js",
+  "types": "life_simulation.d.ts",
+  "sideEffects": false
+}

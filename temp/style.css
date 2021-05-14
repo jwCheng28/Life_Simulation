@@ -1,0 +1,29 @@
+.container {
+    width: 15%;
+    float: right;
+}
+
+.container button {
+    width: 100%;
+    display: block;
+    padding: 10px;
+}
+
+.container input {
+    display: block;
+}
+
+.inputs {
+    position: relative;
+    padding: 10px;
+}
+
+.my_canvas {
+    position: absolute;
+    top: 40px;
+    left: 20%;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
