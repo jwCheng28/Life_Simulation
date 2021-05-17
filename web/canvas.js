@@ -25,7 +25,7 @@ export const drawGrid = (ctx, width, height, cell, color) => {
     ctx.stroke();
 };
 
-export const clearScreen = (ctx, universe, width, height, cell, color="#FFFFFF") => {
+export const clearScreen = (ctx, width, height, cell, color="#FFFFFF") => {
     /*
     @param:
         ctx: 2D canvas context
@@ -45,7 +45,6 @@ export const clearScreen = (ctx, universe, width, height, cell, color="#FFFFFF")
         }
     }
     ctx.stroke();
-    console.log("Screen cleared");
 };
 
 export const drawCells = (ctx, universe, width, height, cell) => {
