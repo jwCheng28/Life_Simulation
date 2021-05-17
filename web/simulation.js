@@ -17,6 +17,7 @@ const pauseButton = document.getElementById("pause");
 const setColor = document.getElementById("cell_color");
 const setPopulation = document.getElementById("population");
 let animation = null;
+let drawn = false;
 
 const loop = () => {
     universe.next_cycle();
@@ -25,28 +26,35 @@ const loop = () => {
 };
 
 const play = () => {
-    console.log("Playing animation");
     animation = requestAnimationFrame(loop);
 };
 
 const pause = () => {
-    console.log("Animation paused");
     cancelAnimationFrame(animation);
     animation = null;
 };
 
+setPopulation.addEventListener("mouseup", event => {
+    if (animation == null && drawn == true) {
+        universe.random_initialization(setPopulation.value);
+        draw.drawCells(ctx, universe, UNIVERSE_WIDTH, UNIVERSE_HEIGHT, cell);
+    }
+});
+
 generateButton.addEventListener("click", event => {
     if (animation != null) pause();
-    draw.clearScreen(ctx, universe, UNIVERSE_WIDTH, UNIVERSE_HEIGHT, cell)
+    draw.clearScreen(ctx, UNIVERSE_WIDTH, UNIVERSE_HEIGHT, cell);
     let population = setPopulation.value;
     universe.random_initialization(population);
     draw.drawCells(ctx, universe, UNIVERSE_WIDTH, UNIVERSE_HEIGHT, cell);
+    drawn = true;
 });
 
 clearButton.addEventListener("click", event => {
-    draw.clearScreen(ctx, universe, UNIVERSE_WIDTH, UNIVERSE_HEIGHT, cell)
+    draw.clearScreen(ctx, UNIVERSE_WIDTH, UNIVERSE_HEIGHT, cell);
     universe = new Universe(UNIVERSE_WIDTH, UNIVERSE_HEIGHT);
     pause();
+    drawn = false;
 });
 
 pauseButton.addEventListener("click", event => {
@@ -55,4 +63,7 @@ pauseButton.addEventListener("click", event => {
 
 setColor.addEventListener("change", event => {
     cell.color = setColor.value;
+    if (animation == null && drawn == true) {
+        draw.drawCells(ctx, universe, UNIVERSE_WIDTH, UNIVERSE_HEIGHT, cell);
+    }
 });
